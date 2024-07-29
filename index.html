@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mappa Mentale Interattiva</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        #mynetwork {
+            width: 100%;
+            height: 100vh;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+    // Dati della mappa mentale
+    var nodes = new vis.DataSet([
+        {id: 1, label: 'Principi Generali', color: '#ffcc00', shape: 'box', font: { size: 20 }},
+        {id: 2, label: 'Codice di comportamento', color: '#ff9900'},
+        {id: 3, label: 'Buona amministrazione', color: '#ff9900'},
+        {id: 4, label: 'Conflitto di interessi', color: '#ff9900'},
+        {id: 5, label: 'Salute e Sicurezza sul Lavoro (SSL)', color: '#66ccff', shape: 'box', font: { size: 20 }},
+        {id: 6, label: 'Normativa SSL', color: '#3399ff'},
+        {id: 7, label: 'Normative Specifiche', color: '#3399ff'},
+        {id: 8, label: 'Standard ISO', color: '#3399ff'},
+        {id: 9, label: 'Diritti e Doveri dei Lavoratori', color: '#99cc00', shape: 'box', font: { size: 20 }},
+        {id: 10, label: 'Codice Civile', color: '#66cc00'},
+        {id: 11, label: 'Statuto dei Lavoratori', color: '#66cc00'},
+        {id: 12, label: 'CCNL', color: '#66cc00'},
+        {id: 13, label: 'Protezione dei Minori e dei Giovani Lavoratori', color: '#ff6666', shape: 'box', font: { size: 20 }},
+        {id: 14, label: 'Norme Tecniche e Direttive Europee', color: '#ffcc99', shape: 'box', font: { size: 20 }},
+        {id: 15, label: 'Procedure di Ispezione', color: '#ffcc99', shape: 'box', font: { size: 20 }},
+        {id: 16, label: 'Strumenti e Tecnologie Informatiche', color: '#cc99ff', shape: 'box', font: { size: 20 }},
+        // Altri nodi...
+    ]);
+
+    var edges = new vis.DataSet([
+        {from: 1, to: 2},
+        {from: 1, to: 3},
+        {from: 1, to: 4},
+        {from: 5, to: 6},
+        {from: 5, to: 7},
+        {from: 5, to: 8},
+        {from: 9, to: 10},
+        {from: 9, to: 11},
+        {from: 9, to: 12},
+        {from: 13, to: 2},
+        {from: 14, to: 2},
+        {from: 15, to: 2},
+        {from: 16, to: 2},
+        // Altri collegamenti...
+    ]);
+
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        nodes: {
+            shape: 'dot',
+            size: 16,
+            font: {
+                size: 16,
+                color: '#000'
+            },
+            borderWidth: 2
+        },
+        edges: {
+            width: 2,
+            color: { inherit: 'from' },
+            smooth: {
+                type: 'continuous'
+            }
+        },
+        physics: {
+            enabled: true,
+            barnesHut: {
+                gravitationalConstant: -30000,
+                springConstant: 0.04,
+                springLength: 95
+            }
+        },
+        layout: {
+            improvedLayout: true
+        }
+    };
+    var network = new vis.Network(container, data, options);
+</script>
+</body>
+</html>
