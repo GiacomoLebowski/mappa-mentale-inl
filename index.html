@@ -1,125 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mappa Mentale Interattiva</title>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        #mynetwork {
-            width: 100%;
-            height: 100vh;
-            border: 1px solid lightgray;
+    <title>Mappa Mentale delle Normative per gli Ispettori del Lavoro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .map-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .map-node {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .map-node > strong {
+            font-size: 1.5em;
+            color: #0056b3;
+        }
+        .map-branch {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .map-branch li {
+            margin: 10px 0;
+        }
+        .map-branch li strong {
+            color: #0056b3;
+        }
+        .map-branch li ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 2px dashed #0056b3;
+        }
+        .map-branch li ul li {
+            margin: 5px 0;
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
-<div id="mynetwork"></div>
-
-<script type="text/javascript">
-    // Dati della mappa mentale con dettagli delle norme
-    var nodes = new vis.DataSet([
-        {id: 1, label: 'Principi Generali', color: '#ffcc00', shape: 'box', font: { size: 20 }},
-        {id: 2, label: 'Codice di comportamento', color: '#ff9900'},
-        {id: 3, label: 'Buona amministrazione', color: '#ff9900'},
-        {id: 4, label: 'Conflitto di interessi', color: '#ff9900'},
-        {id: 5, label: 'D.P.R. 16 aprile 2013 n. 62', color: '#ffcc99'},
-        {id: 6, label: 'Decreto Legislativo 10 marzo 2023 n. 24', color: '#ffcc99'},
-        {id: 7, label: 'Salute e Sicurezza sul Lavoro (SSL)', color: '#66ccff', shape: 'box', font: { size: 20 }},
-        {id: 8, label: 'Normativa SSL', color: '#3399ff'},
-        {id: 9, label: 'Normative Specifiche', color: '#3399ff'},
-        {id: 10, label: 'Standard ISO', color: '#3399ff'},
-        {id: 11, label: 'Decreto Legislativo 9 aprile 2008, n. 81', color: '#99ccff'},
-        {id: 12, label: 'Direttiva Quadro 89/391/CEE', color: '#99ccff'},
-        {id: 13, label: 'Direttiva 2006/25/CE', color: '#99ccff'},
-        {id: 14, label: 'Regolamento REACH (CE) n. 1907/2006', color: '#99ccff'},
-        {id: 15, label: 'ISO 45001:2018', color: '#99ccff'},
-        {id: 16, label: 'OHSAS 18001:2007', color: '#99ccff'},
-        {id: 17, label: 'Diritti e Doveri dei Lavoratori', color: '#99cc00', shape: 'box', font: { size: 20 }},
-        {id: 18, label: 'Codice Civile', color: '#66cc00'},
-        {id: 19, label: 'Statuto dei Lavoratori', color: '#66cc00'},
-        {id: 20, label: 'CCNL', color: '#66cc00'},
-        {id: 21, label: 'Libro V, Titolo II', color: '#ccffcc'},
-        {id: 22, label: 'Legge 20 maggio 1970, n. 300', color: '#ccffcc'},
-        {id: 23, label: 'Protezione dei Minori e dei Giovani Lavoratori', color: '#ff6666', shape: 'box', font: { size: 20 }},
-        {id: 24, label: 'Convenzione n. 138 sull\'età minima (1973)', color: '#ff9999'},
-        {id: 25, label: 'Convenzione n. 182 sulle peggiori forme di lavoro minorile (1999)', color: '#ff9999'},
-        {id: 26, label: 'Direttiva 94/33/CE', color: '#ff9999'},
-        {id: 27, label: 'Norme Tecniche e Direttive Europee', color: '#ffcc99', shape: 'box', font: { size: 20 }},
-        {id: 28, label: 'Direttiva Macchine', color: '#ffcc99'},
-        {id: 29, label: 'Normativa sugli Ascensori', color: '#ffcc99'},
-        {id: 30, label: 'Generatori di Vapore', color: '#ffcc99'},
-        {id: 31, label: 'Direttiva 2006/42/CE', color: '#ffccff'},
-        {id: 32, label: 'Decreto Legislativo 17/2010', color: '#ffccff'},
-        {id: 33, label: 'Direttiva 2014/33/UE', color: '#ffccff'},
-        {id: 34, label: 'DPR 162/1999', color: '#ffccff'},
-        {id: 35, label: 'Direttiva 2014/68/UE (PED)', color: '#ffccff'},
-        {id: 36, label: 'EN 12952', color: '#ffccff'},
-        {id: 37, label: 'EN 12953', color: '#ffccff'},
-        {id: 38, label: 'Procedure di Ispezione', color: '#ffcc99', shape: 'box', font: { size: 20 }},
-        {id: 39, label: 'Convenzione n. 81 sull\'ispezione del lavoro (1947)', color: '#ccffcc'},
-        {id: 40, label: 'Protocollo del 1995 alla Convenzione n. 81', color: '#ccffcc'},
-        {id: 41, label: 'Convenzione n. 129 sull\'ispezione del lavoro (agricoltura) (1969)', color: '#ccffcc'},
-        {id: 42, label: 'Strumenti e Tecnologie Informatiche', color: '#cc99ff', shape: 'box', font: { size: 20 }},
-        {id: 43, label: 'Protezione dei dati', color: '#e5ccff'},
-        {id: 44, label: 'Sicurezza informatica', color: '#e5ccff'}
-    ]);
-
-    var edges = new vis.DataSet([
-        {from: 1, to: 2},
-        {from: 1, to: 3},
-        {from: 1, to: 4},
-        {from: 2, to: 5},
-        {from: 2, to: 6},
-        {from: 7, to: 8},
-        {from: 7, to: 9},
-        {from: 7, to: 10},
-        {from: 8, to: 11},
-        {from: 8, to: 12},
-        {from: 9, to: 13},
-        {from: 9, to: 14},
-        {from: 10, to: 15},
-        {from: 10, to: 16},
-        {from: 17, to: 18},
-        {from: 17, to: 19},
-        {from: 17, to: 20},
-        {from: 18, to: 21},
-        {from: 19, to: 22},
-        {from: 23, to: 24},
-        {from: 23, to: 25},
-        {from: 23, to: 26},
-        {from: 27, to: 28},
-        {from: 27, to: 29},
-        {from: 27, to: 30},
-        {from: 28, to: 31},
-        {from: 28, to: 32},
-        {from: 29, to: 33},
-        {from: 29, to: 34},
-        {from: 30, to: 35},
-        {from: 30, to: 36},
-        {from: 30, to: 37},
-        {from: 38, to: 39},
-        {from: 38, to: 40},
-        {from: 38, to: 41},
-        {from: 42, to: 43},
-        {from: 42, to: 44}
-    ]);
-
-    var container = document.getElementById('mynetwork');
-    var data = {
-        nodes: nodes,
-        edges: edges
-    };
-    var options = {
-        nodes: {
-            shape: 'dot',
-            size: 16,
-            font: {
-                size: 16,
-                color: '#000'
-            },
-            borderWidth: 2
-        },
-        edges: {
-            width:
+    <div class="map-container">
+        <div class="map-node">
+            <strong>Normative per gli Ispettori del Lavoro</strong>
+            <ul class="map-branch">
+                <li>
+                    <strong>Normative Principali</strong>
+                    <ul class="map-branch">
+                        <li>Protocollo del 1995 alla Convenzione sull'ispezione del lavoro</li>
+                        <li>Decreto Legislativo 14 settembre 2015, n. 148</li>
+                        <li>Decreto Legislativo 18 aprile 2016, n. 50</li>
+                        <li>Direttiva 2014/33/UE</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Categorie di Norme Specifiche</strong>
+                    <ul class="map-branch">
+                        <li>
+                            <strong>Normativa SSL (Salute e Sicurezza sul Lavoro)</strong>
+                            <ul class="map-branch">
+                                <li>Protocollo del 1995 alla Convenzione sull'ispezione del lavoro</li>
+                                <li>Decreto Legislativo 14 settembre 2015, n. 148</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Direttiva Macchine</strong>
+                            <ul class="map-branch">
+                                <li>Decreto Legislativo 18 aprile 2016, n. 50</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>DPI (Dispositivi di Protezione Individuale)</strong>
+                            <ul class="map-branch">
+                                <li>Decreto Legislativo 14 settembre 2015, n. 148</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Ascensori</strong>
+                            <ul class="map-branch">
+                                <li>Direttiva 2014/33/UE</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Generatori di Vapore</strong>
+                            <ul class="map-branch">
+                                <li>Direttiva 2014/33/UE</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Diritto del Lavoro</strong>
+                            <ul class="map-branch">
+                                <li>Protocollo del 1995 alla Convenzione sull'ispezione del lavoro</li>
+                                <li>Decreto Legislativo 14 settembre 2015, n. 148</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Trasporti Ferroviari</strong>
+                            <ul class="map-branch">
+                                <li>Nessuna norma specifica</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Impianti ad Alta Pressione</strong>
+                            <ul class="map-branch">
+                                <li>Nessuna norma specifica</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Strumenti e Tecnologie Informatiche</strong>
+                            <ul class="map-branch">
+                                <li>Nessuna norma specifica</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
