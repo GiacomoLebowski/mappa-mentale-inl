@@ -1,146 +1,302 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mappa Mentale Normative</title>
+    <title>Mappa Mentale Interattiva</title>
     <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 50px;
-        }
-        .cloud {
-            background: #87ceeb;
-            border-radius: 50px;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        .mindmap {
             position: relative;
-            min-width: 200px;
-            text-align: center;
-        }
-        .cloud:before, .cloud:after {
-            content: '';
-            position: absolute;
-            background: #87ceeb;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            z-index: -1;
-        }
-        .cloud:before {
-            top: -30px;
-            left: 10px;
-        }
-        .cloud:after {
-            bottom: -30px;
-            right: 10px;
-        }
-        .line {
-            width: 2px;
-            background: #000;
-            position: absolute;
-        }
-        .line.horizontal {
-            height: 2px;
-            top: 50%;
-            left: 100%;
-        }
-        .line.vertical {
-            width: 2px;
-            height: 100px;
-            top: 100%;
-            left: 50%;
-        }
-        .line.angle {
-            width: 2px;
-            height: 100px;
-            top: 100%;
-            left: 50%;
-            transform: rotate(45deg);
-        }
-        .norma {
-            background: #fff;
-            border-radius: 50px;
-            padding: 10px;
-            margin: 10px;
-            box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
-            position: relative;
-            min-width: 150px;
-        }
-        .connections {
+            width: 2000px;
+            height: 2000px;
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            border: 1px solid #000;
+        }
+        .node {
             position: absolute;
-            width: 100%;
-            top: 100%;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: lightblue;
+            cursor: pointer;
+        }
+        .node:nth-child(2n) {
+            background-color: lightcoral;
+        }
+        .node:nth-child(3n) {
+            background-color: lightgreen;
+        }
+        .node:nth-child(4n) {
+            background-color: lightgoldenrodyellow;
+        }
+        .node:nth-child(5n) {
+            background-color: lightpink;
+        }
+        .node:nth-child(6n) {
+            background-color: lightseagreen;
+        }
+        .node:nth-child(7n) {
+            background-color: lightsalmon;
+        }
+        .node:hover {
+            transform: scale(1.1);
+        }
+        svg {
+            position: absolute;
+            top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        path {
+            stroke-width: 2;
+            fill: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        
-        <div class="cloud">
-            Direttiva Macchine
-            <div class="connections">
-                <div class='norma'>Decreto Legislativo 17/2010</div><div class='norma'>Decreto Legislativo 17/2010</div><div class='norma'>Direttiva 2006/42/CE</div><div class='norma'>Direttiva 2006/42/CE</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            DPI
-            <div class="connections">
-                <div class='norma'>Regolamento (UE) 2016/425</div><div class='norma'>Regolamento (UE) 2016/425</div><div class='norma'>Direttiva 2006/25/CE</div><div class='norma'>Direttiva 2006/25/CE</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            Ascensori
-            <div class="connections">
-                <div class='norma'>Direttiva 2014/33/UE</div><div class='norma'>Decreto del Presidente della Repubblica 162/1999</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            Generatori di Vapore
-            <div class="connections">
-                <div class='norma'>EN 12952</div><div class='norma'>EN 12953</div><div class='norma'>EN 12952</div><div class='norma'>EN 12953</div><div class='norma'>Decreto Legislativo 25 febbraio 2000, n. 93</div><div class='norma'>Decreto Legislativo 25 febbraio 2000, n. 93</div><div class='norma'>Direttiva 2014/68/UE (PED)</div><div class='norma'>Decreto Legislativo 25 febbraio 2000, n. 93</div><div class='norma'>Regolamento REACH (CE) n. 1907/2006</div><div class='norma'>Regolamento REACH (CE) n. 1907/2006</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            Diritto del Lavoro
-            <div class="connections">
-                <div class='norma'>Protocollo del 1995 alla Convenzione sull'ispezione del lavoro del 1947</div><div class='norma'>Protocollo del 1995 alla Convenzione sull'ispezione del lavoro del 1947</div><div class='norma'>Decreto Legislativo 14 settembre 2015, n. 148</div><div class='norma'>Decreto Legislativo 18 aprile 2016, n. 50</div><div class='norma'>Decreto Legislativo 23 febbraio 2000, n. 38</div><div class='norma'>Codice Civile, Libro V, Titolo II</div><div class='norma'>D.P.R. 16 aprile 2013 n. 62</div><div class='norma'>Decreto Legislativo 6 settembre 2001, n. 368</div><div class='norma'>CCNL Sanità Privata</div><div class='norma'>CCNL Bancari</div><div class='norma'>CCNL Sanità Pubblica</div><div class='norma'>CCNL Assicurazioni</div><div class='norma'>CCNL Energia e Petrolio</div><div class='norma'>CCNL Alimentari</div><div class='norma'>CCNL Edilizia</div><div class='norma'>CCNL Scuola e Università</div><div class='norma'>CCNL Agricoltura</div><div class='norma'>CCNL Chimico Farmaceutico</div><div class='norma'>CCNL Trasporti e Logistica</div><div class='norma'>CCNL Telecomunicazioni</div><div class='norma'>CCNL Pubblici Esercizi</div><div class='norma'>CCNL Metalmeccanici</div><div class='norma'>CCNL Commercio</div><div class='norma'>Decreto Legislativo 4 marzo 2015, n. 23</div><div class='norma'>Costituzione della Repubblica Italiana</div><div class='norma'>Legge 12 marzo 1999, n. 68</div><div class='norma'>Legge 12 giugno 1990, n. 146</div><div class='norma'>Convenzione n. 182 sulle peggiori forme di lavoro minorile (1999)</div><div class='norma'>Convenzione n. 138 sull'età minima (1973)</div><div class='norma'>Decreto Legislativo 25 luglio 1998, n. 286</div><div class='norma'>Convenzione sull'ispezione del lavoro (agricoltura), n. 129 del 1969</div><div class='norma'>Convenzione n. 129 sull'ispezione del lavoro (agricoltura) (1969)</div><div class='norma'>Raccomandazione sull'ispezione del lavoro (attività mineraria e trasporti), n. 82 del 1947</div><div class='norma'>Decreto Legislativo 15 giugno 2015, n. 81</div><div class='norma'>Legge 22 maggio 2017, n. 81</div><div class='norma'>Legge 22 maggio 2017, n. 81</div><div class='norma'>Raccomandazione n. 190</div><div class='norma'>Decreto Legislativo 10 marzo 2023 n. 24</div><div class='norma'>Convenzione sull'ispezione del lavoro, n. 81 del 1947</div><div class='norma'>Convenzione n. 81 sull'ispezione del lavoro (1947)</div><div class='norma'>Decreto Legislativo 8 aprile 2003, n. 66</div><div class='norma'>Convenzione sulla discriminazione (occupazione e professione), n. 111 del 1958</div><div class='norma'>Piano Integrato di Attività e Organizzazione (PIAO)</div><div class='norma'>Convenzione sulla violenza e le molestie, n. 190 del 2019</div><div class='norma'>Direttiva 94/33/CE</div><div class='norma'>Direttiva 94/33/CE</div><div class='norma'>D.Lgs. 30 marzo 2001, n. 165, art. 54, comma 5</div><div class='norma'>Decreto Legislativo 10 settembre 2003, n. 276</div><div class='norma'>Decreto Legislativo 9 aprile 2008, n. 81</div><div class='norma'>Decreto Legislativo 9 aprile 2008, n. 81</div><div class='norma'>Decreto Legislativo 9 aprile 2008, n. 81</div><div class='norma'>Direttiva Quadro 89/391/CEE</div><div class='norma'>Direttiva Quadro 89/391/CEE</div><div class='norma'>ISO 9001:2015</div><div class='norma'>Legge 28 novembre 1996, n. 608</div><div class='norma'>Legge 20 maggio 1970, n. 300</div><div class='norma'>Legge 20 maggio 1970, n. 300</div><div class='norma'>Legge 30 dicembre 1971, n. 1204</div><div class='norma'>Direttiva UE 2019/1937</div><div class='norma'>Legge 16 giugno 1998, n. 191</div><div class='norma'>Decreto Legislativo 30 marzo 2001, n. 165</div><div class='norma'>Decreto Legislativo 30 giugno 2003, n. 196</div><div class='norma'>Decreto Legislativo 11 aprile 2006, n. 198</div><div class='norma'>Decreto Legislativo 9 aprile 2008, n. 81</div><div class='norma'>Decreto Legislativo 27 ottobre 2009, n. 150</div><div class='norma'>Legge 22 maggio 2017, n. 81</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            Trasporti Ferroviari
-            <div class="connections">
-                <div class='norma'>Raccomandazione sull'ispezione del lavoro (attività mineraria e trasporti), n. 82 del 1947</div><div class='norma'>Regolamento (UE) 2016/796</div><div class='norma'>Decreto Legislativo 15 luglio 2015, n. 112</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            Impianti ad Alta Pressione
-            <div class="connections">
-                <div class='norma'>Direttiva 2014/68/UE (PED)</div><div class='norma'>Decreto Legislativo 25 febbraio 2000, n. 93</div><div class='norma'>Regolamento REACH (CE) n. 1907/2006</div><div class='norma'>Regolamento REACH (CE) n. 1907/2006</div>
-            </div>
-        </div>
-        
-        <div class="cloud">
-            Strumenti e Tecnologie Informatiche
-            <div class="connections">
-                <div class='norma'>Decreto Legislativo 7 marzo 2005, n. 82</div>
-            </div>
-        </div>
-        
+    <div class="mindmap">
+        <!-- Nod principale -->
+        <div class="node" style="top: 20%; left: 45%;">Norme sul Lavoro</div>
+
+        <!-- Aggiornamenti e Ispezioni del Lavoro -->
+        <div class="node" style="top: 10%; left: 45%;">Aggiornamenti e Ispezioni del Lavoro</div>
+        <div class="node" style="top: 15%; left: 60%;">Protocollo del 1995 alla Convenzione sull'ispezione del lavoro del 1947</div>
+        <div class="node" style="top: 10%; left: 60%;">Convenzione n. 81 sull'ispezione del lavoro</div>
+        <div class="node" style="top: 5%; left: 70%;">Convenzione n. 129 sull'ispezione del lavoro (agricoltura)</div>
+        <div class="node" style="top: 0%; left: 60%;">Raccomandazione n. 82 sull'ispezione del lavoro (attività minerarie e trasporti)</div>
+
+        <!-- Ammortizzatori Sociali -->
+        <div class="node" style="top: 25%; left: 55%;">Ammortizzatori Sociali</div>
+        <div class="node" style="top: 30%; left: 70%;">Decreto Legislativo 14 settembre 2015, n. 148</div>
+
+        <!-- Appalti Pubblici -->
+        <div class="node" style="top: 35%; left: 65%;">Appalti Pubblici</div>
+        <div class="node" style="top: 40%; left: 80%;">Decreto Legislativo 18 aprile 2016, n. 50</div>
+
+        <!-- Ascensori -->
+        <div class="node" style="top: 45%; left: 55%;">Ascensori</div>
+        <div class="node" style="top: 50%; left: 70%;">Direttiva 2014/33/UE</div>
+        <div class="node" style="top: 55%; left: 80%;">Decreto del Presidente della Repubblica 162/1999</div>
+
+        <!-- Assicurazione Infortuni sul Lavoro -->
+        <div class="node" style="top: 60%; left: 50%;">Assicurazione Infortuni sul Lavoro</div>
+        <div class="node" style="top: 65%; left: 65%;">Decreto Legislativo 23 febbraio 2000, n. 38</div>
+
+        <!-- Codice Civile -->
+        <div class="node" style="top: 70%; left: 55%;">Codice Civile</div>
+        <div class="node" style="top: 75%; left: 70%;">Codice Civile, Libro V, Titolo II</div>
+
+        <!-- Codice generale di comportamento dei dipendenti pubblici -->
+        <div class="node" style="top: 80%; left: 50%;">Codice generale di comportamento dei dipendenti pubblici</div>
+        <div class="node" style="top: 85%; left: 65%;">D.P.R. 16 aprile 2013 n. 62</div>
+
+        <!-- Contratti a termine -->
+        <div class="node" style="top: 90%; left: 55%;">Contratti a termine</div>
+        <div class="node" style="top: 95%; left: 70%;">Decreto Legislativo 6 settembre 2001, n. 368</div>
+
+        <!-- Contratti Collettivi Nazionali di Lavoro (CCNL) -->
+        <div class="node" style="top: 100%; left: 45%;">Contratti Collettivi Nazionali di Lavoro (CCNL)</div>
+        <div class="node" style="top: 105%; left: 60%;">CCNL Sanità Privata</div>
+        <div class="node" style="top: 110%; left: 75%;">CCNL Bancari</div>
+        <div class="node" style="top: 115%; left: 90%;">CCNL Sanità Pubblica</div>
+        <div class="node" style="top: 120%; left: 65%;">CCNL Assicurazioni</div>
+        <div class="node" style="top: 125%; left: 80%;">CCNL Energia e Petrolio</div>
+        <div class="node" style="top: 130%; left: 95%;">CCNL Alimentari</div>
+        <div class="node" style="top: 135%; left: 60%;">CCNL Edilizia</div>
+        <div class="node" style="top: 140%; left: 75%;">CCNL Scuola e Università</div>
+        <div class="node" style="top: 145%; left: 90%;">CCNL Agricoltura</div>
+        <div class="node" style="top: 150%; left: 55%;">CCNL Chimico Farmaceutico</div>
+        <div class="node" style="top: 155%; left: 70%;">CCNL Trasporti e Logistica</div>
+        <div class="node" style="top: 160%; left: 85%;">CCNL Telecomunicazioni</div>
+        <div class="node" style="top: 165%; left: 100%;">CCNL Pubblici Esercizi</div>
+        <div class="node" style="top: 170%; left: 65%;">CCNL Metalmeccanici</div>
+        <div class="node" style="top: 175%; left: 80%;">CCNL Commercio</div>
+
+        <!-- Contratto a Tutele Crescenti -->
+        <div class="node" style="top: 180%; left: 45%;">Contratto a Tutele Crescenti</div>
+        <div class="node" style="top: 185%; left: 60%;">Decreto Legislativo 4 marzo 2015, n. 23</div>
+
+        <!-- Costituzione Italiana -->
+        <div class="node" style="top: 190%; left: 55%;">Costituzione Italiana</div>
+        <div class="node" style="top: 195%; left: 70%;">Costituzione della Repubblica Italiana</div>
+
+        <!-- Direttiva Macchine -->
+        <div class="node" style="top: 200%; left: 50%;">Direttiva Macchine</div>
+        <div class="node" style="top: 205%; left: 65%;">Decreto Legislativo 17/2010</div>
+        <div class="node" style="top: 210%; left: 80%;">Direttiva 2006/42/CE</div>
+
+        <!-- Diritto al lavoro dei disabili -->
+        <div class="node" style="top: 215%; left: 55%;">Diritto al lavoro dei disabili</div>
+        <div class="node" style="top: 220%; left: 70%;">Legge 12 marzo 1999, n. 68</div>
+
+        <!-- Diritto di Sciopero -->
+        <div class="node" style="top: 225%; left: 60%;">Diritto di Sciopero</div>
+        <div class="node" style="top: 230%; left: 75%;">Legge 12 giugno 1990, n. 146</div>
+
+        <!-- Dispositivi di Protezione Individuale (DPI) -->
+        <div class="node" style="top: 235%; left: 55%;">Dispositivi di Protezione Individuale (DPI)</div>
+        <div class="node" style="top: 240%; left: 70%;">Regolamento (UE) 2016/425</div>
+
+        <!-- Divieto delle peggiori forme di lavoro minorile -->
+        <div class="node" style="top: 245%; left: 60%;">Divieto delle peggiori forme di lavoro minorile</div>
+        <div class="node" style="top: 250%; left: 75%;">Convenzione n. 182 sulle peggiori forme di lavoro minorile (1999)</div>
+
+        <!-- Età minima per l'accesso al lavoro -->
+        <div class="node" style="top: 255%; left: 65%;">Età minima per l'accesso al lavoro</div>
+        <div class="node" style="top: 260%; left: 80%;">Convenzione n. 138 sull'età minima (1973)</div>
+
+        <!-- Generatori di Vapore -->
+        <div class="node" style="top: 265%; left: 55%;">Generatori di Vapore</div>
+        <div class="node" style="top: 270%; left: 70%;">EN 12952</div>
+        <div class="node" style="top: 275%; left: 85%;">EN 12953</div>
+        <div class="node" style="top: 280%; left: 60%;">Decreto Legislativo 25 febbraio 2000, n. 93</div>
+
+        <!-- Immigrazione -->
+        <div class="node" style="top: 285%; left: 50%;">Immigrazione</div>
+        <div class="node" style="top: 290%; left: 65%;">Decreto Legislativo 25 luglio 1998, n. 286</div>
+
+        <!-- Impianti ad Alta Pressione -->
+        <div class="node" style="top: 295%; left: 55%;">Impianti ad Alta Pressione</div>
+        <div class="node" style="top: 300%; left: 70%;">Direttiva 2014/68/UE (PED)</div>
+        <div class="node" style="top: 305%; left: 85%;">Decreto Legislativo 25 febbraio 2000, n. 93</div>
+
+        <!-- Jobs Act -->
+        <div class="node" style="top: 310%; left: 60%;">Jobs Act</div>
+        <div class="node" style="top: 315%; left: 75%;">Decreto Legislativo 15 giugno 2015, n. 81</div>
+
+        <!-- Lavoro Agile e Autonomo -->
+        <div class="node" style="top: 320%; left: 55%;">Lavoro Agile e Autonomo</div>
+        <div class="node" style="top: 325%; left: 70%;">Legge 22 maggio 2017, n. 81</div>
+
+        <!-- Misure per l'eliminazione delle peggiori forme di lavoro minorile -->
+        <div class="node" style="top: 330%; left: 60%;">Misure per l'eliminazione delle peggiori forme di lavoro minorile</div>
+        <div class="node" style="top: 335%; left: 75%;">Raccomandazione n. 190</div>
+
+        <!-- Normativa sul Whistleblowing -->
+        <div class="node" style="top: 340%; left: 50%;">Normativa sul Whistleblowing</div>
+        <div class="node" style="top: 345%; left: 65%;">Decreto Legislativo 10 marzo 2023 n. 24</div>
+        <div class="node" style="top: 350%; left: 80%;">Direttiva UE 2019/1937</div>
+
+        <!-- Norme Ambientali -->
+        <div class="node" style="top: 355%; left: 55%;">Norme Ambientali</div>
+        <div class="node" style="top: 360%; left: 70%;">Decreto Legislativo 3 aprile 2006, n. 152</div>
+
+        <!-- Orario di Lavoro -->
+        <div class="node" style="top: 365%; left: 50%;">Orario di Lavoro</div>
+        <div class="node" style="top: 370%; left: 65%;">Decreto Legislativo 8 aprile 2003, n. 66</div>
+
+        <!-- Parità di Trattamento e Non Discriminazione -->
+        <div class="node" style="top: 375%; left: 55%;">Parità di Trattamento e Non Discriminazione</div>
+        <div class="node" style="top: 380%; left: 70%;">Convenzione n. 111 del 1958</div>
+
+        <!-- Prevenzione della Corruzione e Trasparenza -->
+        <div class="node" style="top: 385%; left: 50%;">Prevenzione della Corruzione e Trasparenza</div>
+        <div class="node" style="top: 390%; left: 65%;">Piano Integrato di Attività e Organizzazione (PIAO)</div>
+
+        <!-- Prevenzione della Violenza e delle Molestie sul Lavoro -->
+        <div class="node" style="top: 395%; left: 55%;">Prevenzione della Violenza e delle Molestie sul Lavoro</div>
+        <div class="node" style="top: 400%; left: 70%;">Convenzione n. 190 del 2019</div>
+
+        <!-- Protezione dei Giovani sul Lavoro -->
+        <div class="node" style="top: 405%; left: 50%;">Protezione dei Giovani sul Lavoro</div>
+        <div class="node" style="top: 410%; left: 65%;">Direttiva 94/33/CE</div>
+
+        <!-- Quadro Normativo per l’Adozione del Codice di Comportamento -->
+        <div class="node" style="top: 415%; left: 55%;">Quadro Normativo per l’Adozione del Codice di Comportamento</div>
+        <div class="node" style="top: 420%; left: 70%;">D.Lgs. 30 marzo 2001, n. 165, art. 54, comma 5</div>
+
+        <!-- Radiazioni Ottiche Artificiali -->
+        <div class="node" style="top: 425%; left: 50%;">Radiazioni Ottiche Artificiali</div>
+        <div class="node" style="top: 430%; left: 65%;">Direttiva 2006/25/CE</div>
+
+        <!-- Riforma del Mercato del Lavoro -->
+        <div class="node" style="top: 435%; left: 55%;">Riforma del Mercato del Lavoro</div>
+        <div class="node" style="top: 440%; left: 70%;">Decreto Legislativo 10 settembre 2003, n. 276</div>
+
+        <!-- Salute e Sicurezza sul Lavoro -->
+        <div class="node" style="top: 445%; left: 50%;">Salute e Sicurezza sul Lavoro</div>
+        <div class="node" style="top: 450%; left: 65%;">Decreto Legislativo 9 aprile 2008, n. 81</div>
+        <div class="node" style="top: 455%; left: 80%;">Direttiva Quadro 89/391/CEE</div>
+
+        <!-- Sicurezza nei Cantieri -->
+        <div class="node" style="top: 460%; left: 55%;">Sicurezza nei Cantieri</div>
+        <div class="node" style="top: 465%; left: 70%;">Decreto Legislativo 9 aprile 2008, n. 81 - Allegato XV e XVI</div>
+        <div class="node" style="top: 470%; left: 85%;">Direttiva 92/57/CEE</div>
+
+        <!-- Sistemi di Gestione -->
+        <div class="node" style="top: 475%; left: 50%;">Sistemi di Gestione</div>
+        <div class="node" style="top: 480%; left: 65%;">ISO 14001:2015</div>
+        <div class="node" style="top: 485%; left: 80%;">OHSAS 18001:2007</div>
+        <div class="node" style="top: 490%; left: 60%;">ISO 50001:2018</div>
+        <div class="node" style="top: 495%; left: 75%;">ISO 9001:2015</div>
+        <div class="node" style="top: 500%; left: 90%;">ISO 45001:2018</div>
+
+        <!-- Sostanze Chimiche -->
+        <div class="node" style="top: 505%; left: 55%;">Sostanze Chimiche</div>
+        <div class="node" style="top: 510%; left: 70%;">Regolamento REACH (CE) n. 1907/2006</div>
+
+        <!-- Sostegno del Reddito -->
+        <div class="node" style="top: 515%; left: 50%;">Sostegno del Reddito</div>
+        <div class="node" style="top: 520%; left: 65%;">Legge 28 novembre 1996, n. 608</div>
+
+        <!-- Statuto dei Lavoratori -->
+        <div class="node" style="top: 525%; left: 55%;">Statuto dei Lavoratori</div>
+        <div class="node" style="top: 530%; left: 70%;">Legge 20 maggio 1970, n. 300</div>
+
+        <!-- Trasporti Ferroviari -->
+        <div class="node" style="top: 535%; left: 50%;">Trasporti Ferroviari</div>
+        <div class="node" style="top: 540%; left: 65%;">Regolamento (UE) 2016/796</div>
+        <div class="node" style="top: 545%; left: 80%;">Decreto Legislativo 15 luglio 2015, n. 112</div>
+
+        <!-- Tutela delle Lavoratrici Madri -->
+        <div class="node" style="top: 550%; left: 55%;">Tutela delle Lavoratrici Madri</div>
+        <div class="node" style="top: 555%; left: 70%;">Legge 30 dicembre 1971, n. 1204</div>
+
+        <!-- Formazione del Personale Dipendente e Lavoro a Distanza -->
+        <div class="node" style="top: 560%; left: 50%;">Formazione del Personale Dipendente e Lavoro a Distanza</div>
+        <div class="node" style="top: 565%; left: 65%;">Legge 16 giugno 1998, n. 191</div>
+
+        <!-- Norme Generali sull'Ordinamento del Lavoro alle Dipendenze delle Pubbliche Amministrazioni -->
+        <div class="node" style="top: 570%; left: 55%;">Norme Generali sull'Ordinamento del Lavoro alle Dipendenze delle Pubbliche Amministrazioni</div>
+        <div class="node" style="top: 575%; left: 70%;">Decreto Legislativo 30 marzo 2001, n. 165</div>
+
+        <!-- Codice in Materia di Protezione dei Dati Personali -->
+        <div class="node" style="top: 580%; left: 50%;">Codice in Materia di Protezione dei Dati Personali</div>
+        <div class="node" style="top: 585%; left: 65%;">Decreto Legislativo 30 giugno 2003, n. 196</div>
+
+        <!-- Codice dell'Amministrazione Digitale -->
+        <div class="node" style="top: 590%; left: 55%;">Codice dell'Amministrazione Digitale</div>
+        <div class="node" style="top: 595%; left: 70%;">Decreto Legislativo 7 marzo 2005, n. 82</div>
+
+        <!-- Codice delle Pari Opportunità tra Uomo e Donna -->
+        <div class="node" style="top: 600%; left: 50%;">Codice delle Pari Opportunità tra Uomo e Donna</div>
+        <div class="node" style="top: 605%; left: 65%;">Decreto Legislativo 11 aprile 2006, n. 198</div>
+
+        <!-- Tutela della Salute e della Sicurezza nei Luoghi di Lavoro -->
+        <div class="node" style="top: 610%; left: 55%;">Tutela della Salute e della Sicurezza nei Luoghi di Lavoro</div>
+        <div class="node" style="top: 615%; left: 70%;">Decreto Legislativo 9 aprile 2008, n. 81</div>
+
+        <!-- Ottimizzazione della Produttività del Lavoro Pubblico e di Efficienza e Trasparenza delle Pubbliche Amministrazioni -->
+        <div class="node" style="top: 620%; left: 50%;">Ottimizzazione della Produttività del Lavoro Pubblico e di Efficienza e Trasparenza delle Pubbliche Amministrazioni</div>
+        <div class="node" style="top: 625%; left: 65%;">Decreto Legislativo 27 ottobre 2009, n. 150</div>
+
+        <!-- Misure per la Tutela del Lavoro Autonomo Non Imprenditoriale e Misure Volte a Favorire l'Articolazione Flessibile nei Tempi e nei Luoghi del Lavoro Subordinato -->
+        <div class="node" style="top: 630%; left: 55%;">Misure per la Tutela del Lavoro Autonomo Non Imprenditoriale</div>
+        <div class="node" style="top: 635%; left: 70%;">Legge 22 maggio 2017, n. 81</div>
+
+        <!-- SVG paths per collegamenti -->
+        <svg>
+            <path d="M50,100 C150,200 250,50 350,150" stroke="red"/>
+            <path d="M50,150 C150,250 250,100 350,200" stroke="blue"/>
+            <path d="M50,200 C150,300 250,150 350,250" stroke="green"/>
+            <path d="M50,250 C150,350 250,200 350,300" stroke="yellow"/>
+            <path d="M50,300 C150,400 250,250 350,350" stroke="purple"/>
+            <!-- Aggiungi altri archi secondo necessità -->
+        </svg>
     </div>
 </body>
 </html>
